@@ -23,12 +23,15 @@ import com.quoto.budgetplannerapp.ui.navigation.AppNavGraph
 import com.quoto.budgetplannerapp.ui.theme.BudgetPlannerAppTheme
 import com.quoto.budgetplannerapp.viewmodel.TransactionViewModel
 import com.quoto.budgetplannerapp.viewmodel.TransactionViewModelFactory
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // ✅ 1. Set up Room + Repository + ViewModel
+        MobileAds.initialize(this) // ✅ AdMob initialized
+
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,

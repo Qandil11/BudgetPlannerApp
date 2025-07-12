@@ -118,7 +118,7 @@ fun AddTransactionScreen(
                         errorMessage = "Please enter valid title and amount"
                     } else {
                         val finalAmount = if (isIncome) parsedAmount else -parsedAmount
-                        viewModel.insertTransaction(title, parsedAmount, selectedCategory)
+                        viewModel.insertTransaction(title, finalAmount, selectedCategory)
                         onTransactionSaved()
                     }
                 },

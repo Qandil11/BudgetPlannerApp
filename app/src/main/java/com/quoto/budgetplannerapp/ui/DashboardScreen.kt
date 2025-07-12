@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quoto.budgetplannerapp.data.TransactionPlanner
+import com.quoto.budgetplannerapp.ui.components.BannerAdView
 
 enum class FilterOption { ALL, INCOME, EXPENSE }
 
@@ -56,37 +57,56 @@ fun DashboardScreen(
         },
         modifier = modifier
     ) { innerPadding ->
-        Column(
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp)
         ) {
-            SummaryCard(totalBalance, totalIncome, totalExpense)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                SummaryCard(totalBalance, totalIncome, totalExpense)
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Text("Budget Usage", fontWeight = FontWeight.Medium)
-            LinearProgressIndicator(
-                progress = progress.toFloat(),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Text("\u00A3${-totalExpense} / \u00A3$monthlyBudget", color = Color.Gray)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("Budget Usage", fontWeight = FontWeight.Medium)
+                LinearProgressIndicator(
+                    progress = progress.toFloat(),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text("\u00A3${-totalExpense} / \u00A3$monthlyBudget", color = Color.Gray)
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            FilterChips(filterOption) { selected ->
-                filterOption = selected
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text("Recent Transactions", fontSize = 18.sp, fontWeight = FontWeight.Medium)
-
-            LazyColumn {
-                items(filteredTransactions) { tx ->
-                    TransactionCard(tx)
+                FilterChips(filterOption) { selected ->
+                    filterOption = selected
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text("Recent Transactions", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+
+                LazyColumn(
+                    modifier = Modifier.weight(1f, fill = false).padding(bottom = 72.dp) // create room for FAB and Ad
+
+                ) {
+                    items(filteredTransactions) { tx ->
+                        TransactionCard(tx)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(48.dp)) // Optional space above ad
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider(thickness = 1.dp, color = Color.LightGray)
+
+            BannerAdView(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            )
         }
     }
 }
@@ -94,29 +114,44 @@ fun DashboardScreen(
 @Composable
 fun SummaryCard(balance: Double, income: Double, expense: Double) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFEDE7F6)),
-        modifier = Modifier.fillMaxWidth()
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        modifier = Modifier.fillMaxWidth(),elevation = CardDefaults.cardElevation(6.dp)
+
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Balance", fontWeight = FontWeight.Bold)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Balance", fontWeight = FontWeight.Bold, color = Color.Black)
                 Text("\u00A3%.2f".format(balance), fontWeight = FontWeight.Bold)
             }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text("Income", color = Color(0xFF2E7D32))
                 Text("+\u00A3%.2f".format(income), color = Color(0xFF2E7D32))
             }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text("Expense", color = Color.Red)
-                Text("-\u00A3%.2f".format(-expense), color = Color.Red)
-            }
+                Text(
+                    text = if (expense < 0) "-\u00A3%.2f".format(-expense) else "\u00A3%.2f".format(0.0),
+                    color = Color.Red
+                )            }
         }
     }
 }
 
 @Composable
 fun FilterChips(selected: FilterOption, onSelected: (FilterOption) -> Unit) {
-    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         FilterChip("All", selected == FilterOption.ALL) { onSelected(FilterOption.ALL) }
         FilterChip("Income", selected == FilterOption.INCOME) { onSelected(FilterOption.INCOME) }
         FilterChip("Expense", selected == FilterOption.EXPENSE) { onSelected(FilterOption.EXPENSE) }

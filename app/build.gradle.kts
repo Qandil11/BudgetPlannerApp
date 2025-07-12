@@ -16,7 +16,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        versionCode = 1 // increment on every release
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -90,5 +91,6 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2") // or 2.6.1
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2") // or 2.6.1
+    implementation("com.google.android.gms:play-services-ads:22.6.0") // ✅ Latest
 
 }
