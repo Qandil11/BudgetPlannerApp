@@ -1,6 +1,6 @@
 # BudgetPlannerApp — Simple Android Budget Tracker 💰
 
-![Build Status](https://github.com/Qandil11/BudgetPlannerApp/actions/workflows/android-ci.yml/badge.svg)
+![Build Status](https://github.com/Qandil11/BudgetPlannerApp/actions/workflows/android.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 
