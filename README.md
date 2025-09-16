@@ -1,8 +1,8 @@
 # BudgetPlannerApp — Simple Android Budget Tracker 💰
 
-![Build Status](https://github.com/Qandil11/BudgetPlannerApp/actions/workflows/android-ci.yml/badge.svg)  
-![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)  
-![Kotlin](https://img.shields.io/badge/Kotlin-Android-blue.svg)
+![Build Status](https://github.com/Qandil11/BudgetPlannerApp/actions/workflows/android-ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+
 
 A lightweight Android app to help you plan monthly budgets, track spending, and visualise expenses.  
 
